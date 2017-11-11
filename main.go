@@ -45,6 +45,12 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:    "what?",
+			Usage:   "godestroy what?",
+			Aliases: []string{"list"},
+			Action:  action(destroyCli.List),
+		},
 	}
 
 	app.Run(os.Args)
