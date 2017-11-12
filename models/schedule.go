@@ -13,6 +13,21 @@ type Schedule struct {
 	TimeToDestroy time.Time
 }
 
+func (s *Schedule) Remove(db *sql.DB) error {
+	_, err := db.Exec("delete from schedules where id = ?", s.ID)
+	return err
+}
+
+func FindSchedule(path string, db *sql.DB) (*Schedule, error) {
+	row := db.QueryRow("select id, path, size, mod_time, time_to_destroy from schedules where path = ?", path)
+	schedule := &Schedule{}
+	err := row.Scan(&schedule.ID, &schedule.Path, &schedule.Size, &schedule.ModTime, &schedule.TimeToDestroy)
+	if err != nil {
+		return nil, err
+	}
+	return schedule, nil
+}
+
 func WriteSchedules(schedules []*Schedule, db *sql.DB) error {
 	tx, err := db.Begin()
 	if err != nil {
@@ -38,21 +53,10 @@ func GetAllSchedules(db *sql.DB) ([]*Schedule, error) {
 	}
 
 	for rows.Next() {
-		var id int
-		var path string
-		var size int64
-		var modTime time.Time
-		var timeToDestroy time.Time
-		err := rows.Scan(&id, &path, &size, &modTime, &timeToDestroy)
+		schedule := &Schedule{}
+		err := rows.Scan(&schedule.ID, &schedule.Path, &schedule.Size, &schedule.ModTime, &schedule.TimeToDestroy)
 		if err != nil {
 			return schedules, err
-		}
-		schedule := &Schedule{
-			ID:            id,
-			Path:          path,
-			Size:          size,
-			ModTime:       modTime,
-			TimeToDestroy: timeToDestroy,
 		}
 		schedules = append(schedules, schedule)
 	}

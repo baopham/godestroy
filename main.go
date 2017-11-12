@@ -51,6 +51,12 @@ func main() {
 			Aliases: []string{"list"},
 			Action:  action(destroyCli.List),
 		},
+		{
+			Name:    "not",
+			Usage:   "godestroy not files ~/Desktop/Screen*.png",
+			Aliases: []string{"remove"},
+			Action:  action(destroyCli.Remove),
+		},
 	}
 
 	app.Run(os.Args)

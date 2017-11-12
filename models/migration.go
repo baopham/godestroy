@@ -16,10 +16,9 @@ type Migration struct {
 }
 
 func GetLatestMigration(db *sql.DB) (*Migration, error) {
-	var id int
-	var time time.Time
-	err := db.QueryRow(fmt.Sprintf(`select id, time from migrations order by time desc`)).Scan(&id, &time)
-	migration := &Migration{ID: id, Time: time}
+	migration := &Migration{}
+	stm := fmt.Sprintf(`select id, time from migrations order by time desc`)
+	err := db.QueryRow(stm).Scan(&migration.ID, &migration.Time)
 
 	if err == sql.ErrNoRows {
 		return migration, nil
