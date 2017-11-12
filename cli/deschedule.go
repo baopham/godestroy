@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func Remove(c *cli.Context, db *sql.DB) error {
+func Deschedule(c *cli.Context, db *sql.DB) error {
 	for _, path := range c.Args()[1:] {
 		info, err := os.Stat(path)
 		if os.IsNotExist(err) || info.IsDir() {

@@ -63,14 +63,14 @@ func main() {
 			Name:        "not",
 			Usage:       "godestroy not files ~/Desktop/Screen*.png",
 			Description: "Don't destroy the provided files",
-			Aliases:     []string{"remove"},
-			Action:      action(destroyCli.Remove),
+			Aliases:     []string{"deschedule"},
+			Action:      action(destroyCli.Deschedule),
 		},
 		{
 			Name:        "now!",
 			Usage:       "godestroy now!",
 			Description: "Destroy the files that are scheduled to be deleted now",
-			Aliases:     []string{"remove"},
+			Aliases:     []string{"destroy"},
 			Action:      action(destroyCli.Destroy),
 		},
 	}
