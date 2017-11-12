@@ -28,10 +28,11 @@ VERSION:
    1.0.0
 
 COMMANDS:
-     files        godestroy files ~/Desktop/Screen*.png --in 10days
-     what?, list  godestroy what?
-     not, remove  godestroy not files ~/Desktop/Screen*.png
-     help, h      Shows a list of commands or help for one command
+     files            godestroy files ~/Desktop/Screen*.png --in 10days
+     what?, list      godestroy what?
+     not, deschedule  godestroy not files ~/Desktop/Screen*.png
+     now!, destroy    godestroy now!
+     help, h          Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
    --help, -h     show help
