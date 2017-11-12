@@ -31,13 +31,14 @@ func main() {
 	app.EnableBashCompletion = true
 	app.Commands = []cli.Command{
 		{
-			Name:   "files",
-			Usage:  "godestroy files ~/Desktop/Screen*.png --in 10days",
-			Action: action(destroyCli.Schedule),
+			Name:        "files",
+			Usage:       "godestroy files ~/Desktop/Screen*.png --in 10days",
+			Description: "Schedule to destroy the provided files",
+			Action:      action(destroyCli.Schedule),
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "in",
-					Usage: "Time to wait to destroy the files (e.g. --in 2sec, 2mins, 2hours, etc.)",
+					Usage: "Time to wait to destroy the files (e.g. --in 2seconds, 2mins, 2hours, etc.)",
 				},
 				cli.StringFlag{
 					Name:  "at",
@@ -46,16 +47,31 @@ func main() {
 			},
 		},
 		{
-			Name:    "what?",
-			Usage:   "godestroy what?",
-			Aliases: []string{"list"},
-			Action:  action(destroyCli.List),
+			Name:        "what?",
+			Usage:       "godestroy what?",
+			Description: "List all the scheduled files",
+			Aliases:     []string{"list"},
+			Action:      action(destroyCli.List),
+			Flags: []cli.Flag{
+				cli.BoolFlag{
+					Name:  "now",
+					Usage: "List files that should be destroyed now",
+				},
+			},
 		},
 		{
-			Name:    "not",
-			Usage:   "godestroy not files ~/Desktop/Screen*.png",
-			Aliases: []string{"remove"},
-			Action:  action(destroyCli.Remove),
+			Name:        "not",
+			Usage:       "godestroy not files ~/Desktop/Screen*.png",
+			Description: "Don't destroy the provided files",
+			Aliases:     []string{"remove"},
+			Action:      action(destroyCli.Remove),
+		},
+		{
+			Name:        "now!",
+			Usage:       "godestroy now!",
+			Description: "Destroy the files that are scheduled to be deleted now",
+			Aliases:     []string{"remove"},
+			Action:      action(destroyCli.Destroy),
 		},
 	}
 

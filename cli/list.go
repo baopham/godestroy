@@ -9,7 +9,14 @@ import (
 )
 
 func List(c *cli.Context, db *sql.DB) error {
-	schedules, err := models.GetAllSchedules(db)
+	fn := models.GetAllSchedules
+
+	if c.Bool("now") {
+		fn = models.GetDueSchedules
+	}
+
+	schedules, err := fn(db)
+
 	if err != nil {
 		return err
 	}

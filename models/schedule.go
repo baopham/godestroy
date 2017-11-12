@@ -44,13 +44,29 @@ func WriteSchedules(schedules []*Schedule, db *sql.DB) error {
 	return tx.Commit()
 }
 
-func GetAllSchedules(db *sql.DB) ([]*Schedule, error) {
-	var schedules []*Schedule
+func GetDueSchedules(db *sql.DB) ([]*Schedule, error) {
+	rows, err := db.Query(
+		"select id, path, size, mod_time, time_to_destroy from schedules where time_to_destroy <= ?",
+		time.Now(),
+	)
+	if err != nil {
+		return []*Schedule{}, err
+	}
 
+	return rowsToSchedules(rows)
+}
+
+func GetAllSchedules(db *sql.DB) ([]*Schedule, error) {
 	rows, err := db.Query("select id, path, size, mod_time, time_to_destroy from schedules")
 	if err != nil {
-		return schedules, err
+		return []*Schedule{}, err
 	}
+
+	return rowsToSchedules(rows)
+}
+
+func rowsToSchedules(rows *sql.Rows) ([]*Schedule, error) {
+	var schedules []*Schedule
 
 	for rows.Next() {
 		schedule := &Schedule{}
