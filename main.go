@@ -33,15 +33,15 @@ func main() {
 		{
 			Name:   "files",
 			Usage:  "godestroy files ~/Desktop/Screen*.png --in 10days",
-			Action: action(destroyCli.Files),
+			Action: action(destroyCli.Schedule),
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "in",
-					Usage: "Time to wait to destroy the files (e.g. 2sec, 2min, 2hours, etc.)",
+					Usage: "Time to wait to destroy the files (e.g. --in 2sec, 2mins, 2hours, etc.)",
 				},
 				cli.StringFlag{
 					Name:  "at",
-					Usage: "Specific time when to destroy the files",
+					Usage: `Specific time when to destroy the files (e.g. --at "November 11, 2020")`,
 				},
 			},
 		},

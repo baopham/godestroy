@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func Files(c *cli.Context, db *sql.DB) error {
+func Schedule(c *cli.Context, db *sql.DB) error {
 	timeToDestroy, err := parseTimeOption(c)
 	if err != nil {
 		return err
